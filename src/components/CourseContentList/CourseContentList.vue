@@ -1,18 +1,16 @@
 <template>
   <div>
     <ol class="grid pl-4 md:pl-0">
-      <div class="flex gap-2 p-4">
-        <span>1</span>
+      <div v-for="courseClass of classes" class="flex gap-2 p-4">
+        <span>{{ courseClass.id }}</span>
         <li class="font-bold capitalize">
-          Create a new Nextjs and Typescript project
-        </li>
-      </div>
-      <div class="flex gap-2 p-4">
-        <span>2</span>
-        <li class="font-bold capitalize">
-          Create a new Nextjs and Typescript project
+          {{ courseClass.name }}
         </li>
       </div>
     </ol>
   </div>
 </template>
+
+<script setup>
+defineProps(["classes"]);
+</script>

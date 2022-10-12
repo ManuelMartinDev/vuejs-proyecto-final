@@ -1,8 +1,9 @@
-import CourseShowCaseView from "../views/CourseShowCaseView.vue";
+import TopicShowCaseView from "../views/TopicShowCaseView.vue";
 import CourseView from "../views/CourseView.vue";
 import HomeView from "../views/HomeView.vue";
 import ClassRoomView from "../views/ClassRoomView.vue";
 import TopicListView from "../views/TopicListView.vue";
+import AuthView from "../views/AuthView.vue";
 import { createRouter, createWebHistory } from "vue-router";
 // 1. Define route components.
 // These can be imported from other files
@@ -15,17 +16,17 @@ const routes = [
   { path: "/", component: HomeView },
   { path: "/about", component: About },
   {
-    path: "/course",
-    name: "Course",
-    component: CourseShowCaseView,
+    path: "/topic/:id",
+    name: "Topic",
+    component: TopicShowCaseView,
   },
   {
-    path: "/course-view",
-    name: "CourseView",
+    path: "/course/:id",
+    name: "Course",
     component: CourseView,
   },
   {
-    path: "/classroom",
+    path: "/classroom/:id",
     name: "ClassRoom",
     component: ClassRoomView,
   },
@@ -33,6 +34,11 @@ const routes = [
     path: "/topics",
     name: "Topics",
     component: TopicListView,
+  },
+  {
+    path: "/auth",
+    name: "Auth",
+    component: AuthView,
   },
 ];
 

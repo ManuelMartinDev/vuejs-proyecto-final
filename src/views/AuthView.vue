@@ -1,85 +1,46 @@
 <template>
-  <section class="bg-[#F4F7FF] py-20 lg:py-[120px]">
-    <div class="container">
+  <section class="py-20 lg:py-[120px]">
+    <div class="w-full">
       <div class="flex flex-wrap -mx-4">
         <div class="w-full px-4">
           <div
             class="max-w-[525px] mx-auto text-center bg-white rounded-lg relative overflow-hidden py-16 px-10 sm:px-12 md:px-[60px]"
           >
-            <div class="mb-10 md:mb-16 text-center">
-              <a
-                href="javascript:void(0)"
-                class="inline-block max-w-[160px] mx-auto"
-              >
-                <img
-                  src="https://cdn.tailgrids.com/1.0/assets/images/logo/logo.svg"
-                  alt="logo"
-                />
-              </a>
-            </div>
-            <form>
+            <div class="mb-10 md:mb-16 text-center"></div>
+            <form
+              @submit.prevent="
+                authMode === 'signup' ? registerUser() : logInUser()
+              "
+            >
               <div class="mb-6">
+                <label class="block text-left mb-3">Email</label>
                 <input
                   type="text"
                   placeholder="Email"
-                  class="w-full rounded-md border bordder-[#E9EDF4] py-3 px-5 bg-[#FCFDFE] text-base text-body-color placeholder-[#ACB6BE] outline-none focus-visible:shadow-none focus:border-primary"
+                  class="w-full rounded-md border border-[#E9EDF4] py-3 px-5 bg-[#FCFDFE] text-base text-body-color placeholder-[#ACB6BE] outline-none focus-visible:shadow-none focus:border-primary"
+                  v-model="email"
                 />
               </div>
               <div class="mb-6">
+                <label class="block text-left mb-3">Password</label>
                 <input
                   type="password"
                   placeholder="Password"
-                  class="w-full rounded-md border bordder-[#E9EDF4] py-3 px-5 bg-[#FCFDFE] text-base text-body-color placeholder-[#ACB6BE] outline-none focus-visible:shadow-none focus:border-primary"
+                  class="w-full rounded-md border border-[#E9EDF4] py-3 px-5 bg-[#FCFDFE] text-base text-body-color placeholder-[#ACB6BE] outline-none focus-visible:shadow-none focus:border-primary"
+                  v-model="password"
                 />
               </div>
               <div class="mb-10">
                 <input
+                  :disabled="loading"
                   type="submit"
                   value="Sign In"
-                  class="w-full rounded-md border bordder-primary py-3 px-5 bg-primary text-base text-white cursor-pointer hover:bg-opacity-90 transition"
+                  class="disabled:opacity-25 w-full rounded-md border border-primary py-3 px-5 bg-primary text-base text-white cursor-pointer hover:bg-opacity-90 transition bg-amber-400"
                 />
               </div>
             </form>
             <p class="text-base mb-6 text-[#adadad]">Connect With</p>
             <ul class="flex justify-between -mx-2 mb-12">
-              <li class="px-2 w-full">
-                <a
-                  href="javascript:void(0)"
-                  class="flex h-11 items-center justify-center rounded-md bg-[#4064AC] hover:bg-opacity-90"
-                >
-                  <svg
-                    width="10"
-                    height="20"
-                    viewBox="0 0 10 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9.29878 8H7.74898H7.19548V7.35484V5.35484V4.70968H7.74898H8.91133C9.21575 4.70968 9.46483 4.45161 9.46483 4.06452V0.645161C9.46483 0.290323 9.24343 0 8.91133 0H6.89106C4.70474 0 3.18262 1.80645 3.18262 4.48387V7.29032V7.93548H2.62912H0.747223C0.359774 7.93548 0 8.29032 0 8.80645V11.129C0 11.5806 0.304424 12 0.747223 12H2.57377H3.12727V12.6452V19.129C3.12727 19.5806 3.43169 20 3.87449 20H6.47593C6.64198 20 6.78036 19.9032 6.89106 19.7742C7.00176 19.6452 7.08478 19.4194 7.08478 19.2258V12.6774V12.0323H7.66596H8.91133C9.2711 12.0323 9.54785 11.7742 9.6032 11.3871V11.3548V11.3226L9.99065 9.09677C10.0183 8.87097 9.99065 8.6129 9.8246 8.35484C9.76925 8.19355 9.52018 8.03226 9.29878 8Z"
-                      fill="white"
-                    />
-                  </svg>
-                </a>
-              </li>
-              <li class="px-2 w-full">
-                <a
-                  href="javascript:void(0)"
-                  class="flex h-11 items-center justify-center rounded-md bg-[#1C9CEA] hover:bg-opacity-90"
-                >
-                  <svg
-                    width="22"
-                    height="16"
-                    viewBox="0 0 22 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M19.5516 2.75538L20.9 1.25245C21.2903 0.845401 21.3968 0.53229 21.4323 0.375734C20.3677 0.939335 19.3742 1.1272 18.7355 1.1272H18.4871L18.3452 1.00196C17.4935 0.344423 16.429 0 15.2935 0C12.8097 0 10.8581 1.81605 10.8581 3.91389C10.8581 4.03914 10.8581 4.22701 10.8935 4.35225L11 4.97847L10.2548 4.94716C5.7129 4.82192 1.9871 1.37769 1.38387 0.782779C0.390323 2.34834 0.958064 3.85127 1.56129 4.79061L2.76774 6.54403L0.851613 5.6047C0.887097 6.91977 1.45484 7.95303 2.55484 8.7045L3.5129 9.33072L2.55484 9.67515C3.15806 11.272 4.50645 11.9296 5.5 12.18L6.8129 12.4932L5.57097 13.2446C3.58387 14.4971 1.1 14.4031 0 14.3092C2.23548 15.6869 4.89677 16 6.74194 16C8.12581 16 9.15484 15.8748 9.40322 15.7808C19.3387 13.7143 19.8 5.8865 19.8 4.32094V4.10176L20.0129 3.97652C21.2194 2.97456 21.7161 2.44227 22 2.12916C21.8935 2.16047 21.7516 2.22309 21.6097 2.2544L19.5516 2.75538Z"
-                      fill="white"
-                    />
-                  </svg>
-                </a>
-              </li>
               <li class="px-2 w-full">
                 <a
                   href="javascript:void(0)"
@@ -107,9 +68,13 @@
               Forget Password?
             </a>
             <p class="text-base text-[#adadad]">
-              Not a member yet?
+              {{
+                authMode === "signup"
+                  ? "Already a member?"
+                  : "Not a member yet?"
+              }}
               <a href="javascript:void(0)" class="text-primary hover:underline">
-                Sign Up
+                {{ authMode === "signup" ? "Sign In" : "Sign Up" }}
               </a>
             </p>
             <div>
@@ -336,3 +301,79 @@
     </div>
   </section>
 </template>
+
+<script setup>
+import supabase from "../db/client";
+import Swal from "sweetalert2";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+const email = ref();
+const password = ref();
+const loading = ref(false);
+const authMode = ref("signin");
+const router = useRouter();
+
+function resetForm() {
+  email.value = "";
+  password.value = "";
+}
+
+async function registerUser() {
+  loading.value = true;
+  const { error } = await supabase.auth.signUp({
+    email: email.value,
+    password: password.value,
+    options: {
+      emailRedirectTo: `${window.location.origin}/topics`,
+    },
+  });
+
+  if (error) {
+    loading.value = false;
+
+    return Swal.fire({
+      title: "Error!",
+      text: error.message,
+      icon: "error",
+      confirmButtonText: "OK",
+      toast: true,
+      position: "top-right",
+    });
+  }
+
+  loading.value = false;
+  resetForm();
+  Swal.fire({
+    title: "Success",
+    text: "Check your email to complete the process",
+    icon: "success",
+    confirmButtonText: "OK",
+    toast: true,
+    position: "top-right",
+  });
+}
+
+async function logInUser() {
+  loading.value = true;
+  const { error } = await supabase.auth.signInWithPassword({
+    email: email.value,
+    password: password.value,
+  });
+
+  if (error) {
+    loading.value = false;
+
+    return Swal.fire({
+      title: "Error!",
+      text: error.message,
+      icon: "error",
+      confirmButtonText: "OK",
+      toast: true,
+      position: "top-right",
+    });
+  }
+
+  loading.value = false;
+  router.push({ name: "Topics" });
+}
+</script>
